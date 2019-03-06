@@ -1,0 +1,94 @@
+#!/bin/sh
+
+#
+# git emoji，一个 git 的扩展集合 📦
+# 在你的 commit message 中添加 emoji prefix
+# 看起来更加卡哇伊
+#
+# 项目地址
+#    http://github.com/octree/git-emoji
+#
+# Copyright 2019 Octree. All rights reserved.
+
+# git commit message prefix
+mj_init_prefix="🎉 Initial Commit"
+mj_feature_prefix="✨ Feature: "
+mj_bugfix_prefix="🐛 Bugfix: "
+mj_warn_prefix="🚨 Fix Warnings"
+mj_remove_prefix="🔥 Remove Files: "
+mj_comment_prefix="💡 Documenting source code."
+mj_boom_prefix="💥 Breaking changes: "
+mj_rename_prefix="🚚 Moving or renaming files: "
+mj_deprecated_prefix="💩 Deprecation: "
+mj_peformance_prefix="⚡️ Improving Performance"
+mj_tag_prefix="🔖 Version Tag"
+mj_wip_prefix="🚧 Work In Progress"
+mj_structure_prefix="🎨 Improving structure / format of the code"
+mj_secure_prefix="🔒 Security Fix: "
+mj_localize_prefix="🌐 Localization: "
+mj_deploy_prefix="🚀 Deploy"
+mj_package_prefix="📦 Package"
+mj_config_prefix="🔧 Changing configuration files"
+mj_refactor_prefix="♻️ Refactoring: "
+mj_test_prefix="✅ Tests: "
+mj_docker_prefix="🐳 Docker: "
+mj_ci_prefix="👷 CI"
+
+usage() {
+
+    echo "Usage: git mj <message-type> <message>"
+    echo
+    echo "Available message type are:"
+    echo "init: ${mj_init_prefix}"
+    echo "feature: ${mj_feature_prefix}"
+    echo "bugfix: ${mj_bugfix_prefix}"
+    echo "remove: ${mj_remove_prefix}"
+    echo "rename: ${mj_rename_prefix}"
+    echo "tag: ${mj_tag_prefix}"
+    echo
+    echo "'git mj type' see more message types"
+    echo
+    echo "🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈🎈"
+}
+
+types() {
+    $(echo "Available message type are:"
+    ) | more
+}
+
+main() {
+    if [ $# -lt 1 ]; then
+		usage
+		exit 1
+	fi
+
+    if [ "$1" = "usage" ]; then
+        usage
+        exit 0
+    elif [ "$1" = "usage" ]; then
+        types
+        exit 0
+    fi
+
+    
+
+    if [ $# -ne 2 ]; then
+        usage
+        exit 1
+    fi
+
+    key="mj_$1_prefix"
+    prefix=$(eval echo "$"$key)
+    echo $prefix
+    if [ -z "${prefix}" ]; then
+        echo "❌ unkown message type $1"
+        echo
+        usage
+        exit 1
+    fi
+
+    echo "done"
+
+}
+
+main "$@"
