@@ -11,28 +11,28 @@
 # Copyright 2019 Octree. All rights reserved.
 
 # git commit message prefix
-mj_init_prefix="🎉 Initial Commit"
+mj_init_prefix="🎉 Initial Commit. "
 mj_feature_prefix="✨ Feature: "
 mj_bugfix_prefix="🐛 Bugfix: "
-mj_warn_prefix="🚨 Fix Warnings"
+mj_warn_prefix="🚨 Fix Warnings: "
 mj_remove_prefix="🔥 Remove Files: "
-mj_comment_prefix="💡 Documenting source code."
+mj_comment_prefix="💡 Documenting source code: "
 mj_boom_prefix="💥 Breaking changes: "
 mj_rename_prefix="🚚 Moving or renaming files: "
 mj_deprecated_prefix="💩 Deprecation: "
-mj_peformance_prefix="⚡️ Improving Performance"
-mj_tag_prefix="🔖 Version Tag"
-mj_wip_prefix="🚧 Work In Progress"
-mj_structure_prefix="🎨 Improving structure / format of the code"
+mj_peformance_prefix="⚡️ Improving Performance: "
+mj_tag_prefix="🔖 Version Tag: "
+mj_wip_prefix="🚧 Work In Progress: "
+mj_structure_prefix="🎨 Improving structure: "
 mj_secure_prefix="🔒 Security Fix: "
 mj_localize_prefix="🌐 Localization: "
-mj_deploy_prefix="🚀 Deploy"
-mj_package_prefix="📦 Package"
-mj_config_prefix="🔧 Changing configuration files"
+mj_deploy_prefix="🚀 Deploy: "
+mj_package_prefix="📦 Package: "
+mj_config_prefix="🔧 Changing configuration files: "
 mj_refactor_prefix="♻️ Refactoring: "
 mj_test_prefix="✅ Tests: "
 mj_docker_prefix="🐳 Docker: "
-mj_ci_prefix="👷 CI"
+mj_ci_prefix="👷 CI: "
 
 usage() {
 
@@ -52,8 +52,30 @@ usage() {
 }
 
 types() {
-    $(echo "Available message type are:"
-    ) | more
+    echo "Available message type are:"
+    echo
+    echo "init: ${mj_init_prefix}"
+    echo "feature: ${mj_feature_prefix}"
+    echo "bugfix: ${mj_bugfix_prefix}"
+    echo "warn: ${mj_warn_prefix}"
+    echo "remove: ${mj_remove_prefix}"
+    echo "comment: ${mj_comment_prefix}"
+    echo "boom: ${mj_boom_prefix}"
+    echo "rename: ${mj_rename_prefix}"
+    echo "deprecated: ${mj_deprecated_prefix}"
+    echo "peformance: ${mj_peformance_prefix}"
+    echo "tag: ${mj_tag_prefix}"
+    echo "wip: ${mj_wip_prefix}"
+    echo "structure: ${mj_structure_prefix}"
+    echo "secure: ${mj_secure_prefix}"
+    echo "localize: ${mj_localize_prefix}"
+    echo "deploy: ${mj_deploy_prefix}"
+    echo "package: ${mj_package_prefix}"
+    echo "config: ${mj_config_prefix}"
+    echo "refactor: ${mj_refactor_prefix}"
+    echo "test: ${mj_test_prefix}"
+    echo "docker: ${mj_docker_prefix}"
+    echo "ci: ${mj_ci_prefix}"
 }
 
 main() {
@@ -65,30 +87,35 @@ main() {
     if [ "$1" = "usage" ]; then
         usage
         exit 0
-    elif [ "$1" = "usage" ]; then
+    elif [ "$1" = "type" ]; then
         types
         exit 0
     fi
 
-    
-
-    if [ $# -ne 2 ]; then
-        usage
-        exit 1
-    fi
-
     key="mj_$1_prefix"
+    # get the prefix for message type
     prefix=$(eval echo "$"$key)
-    echo $prefix
+
+    # fatal error if message type does not exist
     if [ -z "${prefix}" ]; then
         echo "❌ unkown message type $1"
         echo
         usage
         exit 1
     fi
+    # git mj init
+    if [ "$1" = "init" ]; then
+        git commit -m "${prefix}"
+        exit 0
+    fi
+    # fata error if message is missing
+    if [ $# -ne 2 ]; then
+        echo "❌ message is required"
+        usage
+        exit 1
+    fi
 
-    echo "done"
-
+    git commit -m "${prefix}${2}"
 }
 
 main "$@"
