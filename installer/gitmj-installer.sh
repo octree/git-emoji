@@ -10,6 +10,7 @@
 #
 # Copyright 2019 Octree. All rights reserved.
 
+cur=$(pwd)
 if [ -z "$INSTALL_PREFIX" ] ; then
 	INSTALL_PREFIX="/usr/local/bin"
 fi
@@ -61,6 +62,7 @@ case "$1" in
 		for exec_file in $EXEC_FILES ; do
 			install -v -m 0755 "$REPO_NAME/$exec_file" "$INSTALL_PREFIX"
 		done
+        rm -rf $REPO_NAME
 		exit
 		;;
 esac
