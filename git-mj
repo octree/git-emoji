@@ -115,7 +115,7 @@ main() {
         exit 1
     fi
     # git commit
-    git commit -m "${prefix}${2}"
+    git commit -m "${prefix} ${2}"
 }
 
 main "$@"
