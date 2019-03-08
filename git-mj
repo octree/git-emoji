@@ -80,9 +80,9 @@ types() {
 
 main() {
     if [ $# -lt 1 ]; then
-		usage
+        usage
 		exit 1
-	fi
+    fi
 
     if [ "$1" = "usage" ]; then
         usage
